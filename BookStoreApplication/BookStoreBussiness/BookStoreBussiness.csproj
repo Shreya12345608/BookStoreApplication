@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BookStoreBussiness\" />
-    <Folder Include="IBookStoreBussiness\" />
+    <ProjectReference Include="..\BookStoreModel\BookStoreModel.csproj" />
+    <ProjectReference Include="..\BookStoreRepository\BookStoreRepository.csproj" />
   </ItemGroup>
 
 </Project>

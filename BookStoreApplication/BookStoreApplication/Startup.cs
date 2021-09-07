@@ -1,3 +1,7 @@
+using BookStoreBussiness.BookStoreBussiness;
+using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreRepository.BookStoreRepository;
+using BookStoreRepository.IBookStoreRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +32,8 @@ namespace BookStoreApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddScoped<IUserAccountBL, UserAccountBL>();
+            services.AddScoped<IUserAccountRL, UserAccountRL>();
             services.AddSwaggerGen(setup =>
             {
                 // Include 'SecurityScheme' to use JWT Authentication
