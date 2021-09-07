@@ -1,8 +1,12 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
 using BookStoreModel.AccountModel;
 using BookStoreRepository.IBookStoreRepository;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace BookStoreBussiness.BookStoreBussiness
@@ -11,10 +15,11 @@ namespace BookStoreBussiness.BookStoreBussiness
     {
         //instance variable
         private IUserAccountRL BookStoreUser;
-
+        string Secret;
         //constructor 
-        public UserAccountBL(IUserAccountRL BookStoreUser)
+        public UserAccountBL(IUserAccountRL BookStoreUser, IConfiguration configuration)
         {
+            Secret = configuration.GetSection("AppSettings").GetSection("Secret").Value;
             this.BookStoreUser = BookStoreUser;
         }
 
@@ -25,7 +30,31 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// <returns></returns>
         public bool AddUserDetails(Registration user)
         {
-            return this.BookStoreUser.AddUserDetails(user);
+            try
+            {
+                return this.BookStoreUser.AddUserDetails(user);
+            }
+            catch
+            {
+
+                throw;
+            }
         }
+
+        /// <summary>
+        /// login  Book Store
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        public UserLogin Login(UserLogin login)
+        {
+            return this.BookStoreUser.Login(login);
+        }
+
+
+
+
+
     }
 }
+   

@@ -12,19 +12,25 @@ namespace BookStoreRepository.BookStoreRepository
     public class UserAccountRL : IUserAccountRL
     {
         string connectionString;
+        
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public UserAccountRL(IConfiguration configuration)
         {
+            ///connection string
             connectionString = configuration.GetSection("ConnectionStrings").GetSection("bookStoreDB").Value;
         }
 
-
+        /// <summary>
+        /// Add User 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public bool AddUserDetails(Registration user)
         {
-            //    Registration registration = new Registration()
-            //    {
-            //        fullName = connectionString
-            //};
-            //return registration;
+      
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
@@ -39,7 +45,7 @@ namespace BookStoreRepository.BookStoreRepository
                     command.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
                     connection.Open();
                     var result = command.ExecuteNonQuery();
-
+                    connection.Close();
                     //Return the result of the transaction 
                     if (result != 0)
                     {
@@ -58,6 +64,46 @@ namespace BookStoreRepository.BookStoreRepository
                 connection.Close();
             }
         }
+
+
+        /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+
+        public UserLogin Login(UserLogin login)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Implementing the stored procedure
+                    SqlCommand command = new SqlCommand("spLogin", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userEmail", login.userEmail);
+                    command.Parameters.AddWithValue("@Password", login.Password);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+
+                    //Return the result of the transaction 
+                    if (result != 0)
+                    {
+                        connection.Close();
+                        return login;
+                    }
+                    connection.Close();
+                    return null;
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
     }
 }
 
