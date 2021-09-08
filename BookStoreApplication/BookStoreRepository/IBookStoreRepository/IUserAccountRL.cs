@@ -28,13 +28,14 @@ namespace BookStoreRepository.IBookStoreRepository
         /// <returns></returns>
         public bool ForgotPassword(string UserEmail);
 
+
+
         /// <summary>
-        /// Reset Password
+        /// Resetpassword for User
         /// </summary>
-        /// <param name="reset"></param>
-        /// <param name="userId"></param>
+        /// <param name="userReset"></param>
         /// <returns></returns>
-        public bool ResetPassword(ResetPassword reset, int userId)
+        object ResetPassword(string email, string password);
     }
 
   

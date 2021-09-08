@@ -22,19 +22,28 @@ namespace BookStoreBussiness.IBookStoreBussiness
         UserLogin Login(UserLogin login);
 
         /// <summary>
+        /// Create token
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public string CreateToken(string userEmail, int userId);
+
+        /// <summary>
         /// Forger password
         /// </summary>
         /// <param name="UserEmail"></param>
         /// <returns></returns>
         public bool ForgotPassword(string UserEmail);
 
+
+
         /// <summary>
-        /// Reset Password
+        /// Resetpassword for User
         /// </summary>
-        /// <param name="reset"></param>
-        /// <param name="userId"></param>
+        /// <param name="userReset"></param>
         /// <returns></returns>
-        public bool ResetPassword(ResetPassword reset, int userId)
+        object ResetPassword(string email, string password);
     }
 
    

@@ -7,6 +7,7 @@ namespace BookStoreModel.AccountModel
 {
     public class UserLogin
     {
+       public int userId { get; set; }
         /// <summary>
         /// This is user email
         /// </summary>

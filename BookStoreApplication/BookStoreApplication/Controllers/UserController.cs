@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
-  
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -50,6 +52,23 @@ namespace BookStoreApplication.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.GetBaseException().GetType() == typeof(SqlException))
+                {
+                    Int32 ErrorCode = ((SqlException)ex.InnerException).Number;
+                    switch (ErrorCode)
+                    {
+                        case 2627:  // Unique constraint error
+                            return this.BadRequest(new { Success = false, Message = " Unique constraint error", StackTrace = ex.StackTrace });
+
+                        case 547:   // Constraint check violation
+                            return this.BadRequest(new { Success = false, Message = " Constraint check violation", StackTrace = ex.StackTrace });
+
+                        case 2601:  // Duplicated key row error
+                            return this.BadRequest(new { Success = false, Message = " Duplicated Email ID. Please enter Unique Email IDow ", StackTrace = ex.StackTrace });
+                        default:
+                            break;
+                    }
+                }
                 return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
             }
         }
@@ -63,13 +82,16 @@ namespace BookStoreApplication.Controllers
         public IActionResult Login(UserLogin login)
         {
             string message;
-            var result = this.userAccountBL.Login(login);
+       
             try
             {
+                var result = this.userAccountBL.Login(login);
                 if (result != null)
                 {
+                  
+                    string Token = userAccountBL.CreateToken(result.userEmail, result.userId);
                     message = "Login done successfully.";
-                    return this.Ok(new { message, result, });
+                    return this.Ok(new { message, result.userEmail, Token  = Token  });
                 }
                 message = "Please check email and password and try again!!";
                 return BadRequest(new { message });
@@ -79,6 +101,40 @@ namespace BookStoreApplication.Controllers
                 return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
             }
         }
+
+        /// <summary>
+        /// Controller method for Forget Password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        //[AllowAnonymous]
+        [HttpPost]
+        [Route("forget-Password")]
+        public ActionResult ForgotPassword(ForgetPassword user)
+        {
+            try
+            {
+                string message;
+                bool forgetpass = userAccountBL.ForgotPassword(user.UserEmail);
+
+
+                if (forgetpass)
+                {
+                    message = "Link has sent to the given email address to reset the password";
+                    return Ok(new { Success = true, message });
+
+                }
+                message = "Unable to sent link to given email address.This Email doesn't exist in database.";
+                return NotFound(new { Sucess = false, message });
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
+            }
+
+        }
+       
 
     }
 }
