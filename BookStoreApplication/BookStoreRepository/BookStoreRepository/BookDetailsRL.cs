@@ -54,7 +54,45 @@ namespace BookStoreRepository.BookStoreRepository
                 throw;
             }
         }
+        /// <summary>
+        /// get all books
+        /// </summary>
+        /// <returns></returns>
 
+        public List<BooksModel> GetAllBooksDetails()
+        {
+            try
+            {
+                List<BooksModel> bookstorelist = new List<BooksModel>();
+                SqlConnection connection = new SqlConnection(connectionString);
+                {
+                    SqlCommand command = new SqlCommand("spGetAllBooks", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    SqlDataReader sqlreader = command.ExecuteReader();
+                    while (sqlreader.Read())
+                    {
+                        BooksModel book = new BooksModel();
+                        book.BookId = Convert.ToInt32(sqlreader["BookId"]);
+                        book.BookName = sqlreader["BookName"].ToString();
+                        book.AuthorName = sqlreader["AuthorName"].ToString();
+                        book.Price = Convert.ToDouble(sqlreader["Price"]);
+                        book.Quantity = Convert.ToInt32(sqlreader["Quantity"]);
+                        book.Description = sqlreader["Description"].ToString();
+                        book.BookImage = sqlreader["BookImage"].ToString();
+                        book.Rating = Convert.ToDouble(sqlreader["Rating"]);
+                        bookstorelist.Add(book);
+                    }
+                    connection.Close();
+                }
+                return bookstorelist;
+            }
+
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
 

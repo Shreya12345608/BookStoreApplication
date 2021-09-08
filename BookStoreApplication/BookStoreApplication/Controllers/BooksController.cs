@@ -46,5 +46,29 @@ namespace BookStoreApplication.Controllers
                 return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
             }
         }
+        /// <summary>
+        /// This method  is getting all book details from database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetAllBooksDetails()
+        {
+            string message;
+            try
+            {
+                List<BooksModel> result = this.BookDetailsBL.GetAllBooksDetails();
+                if (result != null)
+                {
+                    message = "The book details of given bookId is..";
+                    return this.Ok(new { message, result });
+                }
+                message = "Error while fetching book details.!!";
+                return BadRequest(new { message });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
+            }
+        }
     }
 }
