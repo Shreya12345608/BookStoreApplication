@@ -19,7 +19,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        UserLogin Login(UserLogin login);
+        int Login(UserLogin login);
 
         /// <summary>
         /// Forger password
@@ -28,15 +28,25 @@ namespace BookStoreRepository.IBookStoreRepository
         /// <returns></returns>
         public bool ForgotPassword(string UserEmail);
 
-
+        /// <summary>
+        /// Create token
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public string CreateToken(string userEmail, int userId);
 
         /// <summary>
-        /// Resetpassword for User
+        /// Reset Password Method
         /// </summary>
-        /// <param name="userReset"></param>
-        /// <returns></returns>
-        object ResetPassword(string email, string password);
+        /// <param name="resetPassword">Reset Password</param>
+        /// <returns>boolean result</returns>
+
+        public bool ResetPassword(Registration reset, string newPassword);
+
+        public Registration GetUser(string userEmail);
+
     }
 
-  
+
 }

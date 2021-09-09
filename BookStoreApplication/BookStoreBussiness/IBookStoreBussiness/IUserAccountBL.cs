@@ -13,38 +13,32 @@ namespace BookStoreBussiness.IBookStoreBussiness
         /// <param name="registration"></param>
         /// <returns></returns>
        public bool AddUserDetails(Registration user);
-      
+
         /// <summary>
         /// Login for User
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        UserLogin Login(UserLogin login);
+        int Login(UserLogin login);
 
-        /// <summary>
-        /// Create token
-        /// </summary>
-        /// <param name="userEmail"></param>
-        /// <param name="userid"></param>
-        /// <returns></returns>
-        public string CreateToken(string userEmail, int userId);
+        
 
         /// <summary>
         /// Forger password
         /// </summary>
         /// <param name="UserEmail"></param>
         /// <returns></returns>
-        public bool ForgotPassword(string UserEmail);
+        public bool ForgotPassword(string userEmail);
 
 
 
         /// <summary>
-        /// Resetpassword for User
+        /// Reset Password Method
         /// </summary>
-        /// <param name="userReset"></param>
-        /// <returns></returns>
-        object ResetPassword(string email, string password);
+        /// <param name="resetPassword">Reset Password</param>
+        /// <returns>boolean result</returns>
+        public bool ResetPassword(ResetPassword reset, int userId);
     }
-
+    
    
 }

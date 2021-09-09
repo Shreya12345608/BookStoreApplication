@@ -70,7 +70,7 @@ namespace BookStoreBussiness.MSMQUtility
                 string data = mesg.Body.ToString();
                 string userEmail = ExtractData(data);
                 // Process the logic be sending the message
-                string mailSubject = "Link to reset your FundooNotes App Credentials";
+                string mailSubject = "Link to reset your BookStore App Credentials";
                 // using (MailMessage mailMessage = new MailMessage("malviyashreya26@gmail.com", UserEmail))
                 using (MailMessage mailMessage = new MailMessage("malviyashreya26@gmail.com", userEmail))
                 {
@@ -80,7 +80,7 @@ namespace BookStoreBussiness.MSMQUtility
 
                     string url = $"http://localhost:4200/reset-password/{data}";
                     string text = $"<div style='text-align: center'>" +
-                  $"<p>Click on following link to reset your credentials for Fundoonotes:</p>" +
+                  $"<p>Click on following link to reset your credentials for Book Store:</p>" +
                 $"<a href='{url}' style ='color:#f44336'>Click Here To Reset Password</a>" +
                 $"</div>";
                     mailMessage.Body = text;
@@ -125,7 +125,7 @@ namespace BookStoreBussiness.MSMQUtility
             {
                 principal = tokenHandler.ValidateToken(token, parameters, out securityToken);
                 var userEmail = principal.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Email).Value;
-                var userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userid").Value);
+                var userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
                 return userEmail.ToString();
             }
             catch

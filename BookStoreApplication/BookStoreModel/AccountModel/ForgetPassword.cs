@@ -6,6 +6,6 @@ namespace BookStoreModel.AccountModel
 {
    public class ForgetPassword
     {
-        public string UserEmail { get; set; }
+        public string userEmail { get; set; }
     }
 }

@@ -82,16 +82,16 @@ namespace BookStoreApplication.Controllers
         public IActionResult Login(UserLogin login)
         {
             string message;
-       
+
             try
             {
                 var result = this.userAccountBL.Login(login);
-                if (result != null)
+                if (result != 0)
                 {
-                  
-                    string Token = userAccountBL.CreateToken(result.userEmail, result.userId);
+
+                  //  string Token = userAccountBL.CreateToken(login.userEmail, result);
                     message = "Login done successfully.";
-                    return this.Ok(new { message, result.userEmail, Token  = Token  });
+                    return this.Ok(new { message, login.userEmail, });
                 }
                 message = "Please check email and password and try again!!";
                 return BadRequest(new { message });
@@ -115,7 +115,7 @@ namespace BookStoreApplication.Controllers
             try
             {
                 string message;
-                bool forgetpass = userAccountBL.ForgotPassword(user.UserEmail);
+                bool forgetpass = userAccountBL.ForgotPassword(user.userEmail);
 
 
                 if (forgetpass)
@@ -134,7 +134,5 @@ namespace BookStoreApplication.Controllers
             }
 
         }
-       
-
     }
 }
