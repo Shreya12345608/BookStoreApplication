@@ -47,7 +47,7 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public int Login(UserLogin login)
+        public Registration Login(UserLogin login)
         {
             return this.BookStoreUser.Login(login);
         }
@@ -90,7 +90,24 @@ namespace BookStoreBussiness.BookStoreBussiness
             }
         }
 
-       
+        /// <summary>
+        /// token
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string CreateToken(string userEmail, int userId)
+        {
+            try
+            {
+                return BookStoreUser.CreateToken(userEmail, userId);
 
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
     }
 }

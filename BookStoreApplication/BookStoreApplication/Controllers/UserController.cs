@@ -86,12 +86,12 @@ namespace BookStoreApplication.Controllers
             try
             {
                 var result = this.userAccountBL.Login(login);
-                if (result != 0)
+                if (result != null)
                 {
-
-                  //  string Token = userAccountBL.CreateToken(login.userEmail, result);
+                   
+                    string Token = userAccountBL.CreateToken(result.userEmail, result.Userid);
                     message = "Login done successfully.";
-                    return this.Ok(new { message, login.userEmail, });
+                    return this.Ok(new { message, login.userEmail, Token });
                 }
                 message = "Please check email and password and try again!!";
                 return BadRequest(new { message });

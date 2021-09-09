@@ -97,7 +97,7 @@ namespace BookStoreRepository.BookStoreRepository
                         reges.fullName = reader["fullName"].ToString();
                         reges.userEmail = reader["userEmail"].ToString();
                         reges.Password = reader["Password"].ToString();
-                       // reges.PhoneNumber = Convert.ToInt64(reader["PhoneNumber"]);
+                        reges.PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]);
                     }
                     bool result;
                     if (reges != null)
@@ -123,6 +123,54 @@ namespace BookStoreRepository.BookStoreRepository
             finally
             {
                 // connection.close();
+            }
+        }
+
+
+
+        /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+
+        public Registration Login(UserLogin login)
+        {
+            Registration reges = new Registration();
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Implementing the stored procedure
+                    SqlCommand command = new SqlCommand("spLogin", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userEmail", login.userEmail);
+                    command.Parameters.AddWithValue("@Password", login.Password);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        reges.Userid = Convert.ToInt32(reader["userId"]);
+                        reges.fullName = reader["fullName"].ToString();
+                        reges.userEmail = reader["userEmail"].ToString();
+                        reges.Password = reader["Password"].ToString();
+                        // reges.PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]);
+                      
+                    }
+                    if (reges != null)
+                    {
+                        return reges;
+                    }
+                    return null;
+                    
+                }
+            }
+            catch
+            {
+
+                throw;
             }
         }
         //-----------------------------------CREATE TOKEN-----------------------------------------------//
@@ -153,37 +201,6 @@ namespace BookStoreRepository.BookStoreRepository
         }
 
 
-        /// <summary>
-        /// Login User
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-
-        public int Login(UserLogin login)
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    // Implementing the stored procedure
-                    SqlCommand command = new SqlCommand("spLogin", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@userEmail", login.userEmail);
-                    command.Parameters.AddWithValue("@Password", login.Password);
-                    connection.Open();
-                    int result = command.ExecuteNonQuery();
-
-                    //Return the result of the transaction 
-                    return result >= 1 ? result : 0;
-                }
-            }
-            catch
-            {
-
-                throw;
-            }
-        }
 
 
         /// <summary>
@@ -227,7 +244,7 @@ namespace BookStoreRepository.BookStoreRepository
             }
 
         }
-      
+       
         public bool ResetPassword(ResetPassword reset, int userId)
         {
             throw new NotImplementedException();

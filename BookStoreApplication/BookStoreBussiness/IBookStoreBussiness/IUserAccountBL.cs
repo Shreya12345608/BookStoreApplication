@@ -19,7 +19,7 @@ namespace BookStoreBussiness.IBookStoreBussiness
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        int Login(UserLogin login);
+        Registration Login(UserLogin login);
 
         
 
@@ -31,7 +31,7 @@ namespace BookStoreBussiness.IBookStoreBussiness
         public bool ForgotPassword(string userEmail);
 
 
-
+        public string CreateToken(string userEmail, int userId);
         /// <summary>
         /// Reset Password Method
         /// </summary>

@@ -28,7 +28,7 @@ namespace BookStoreModel.AccountModel
         /// This is  phone number of users.
          [Required(ErrorMessage = "Phone No is required")]
         [RegularExpression(@"^[0-9]{10}", ErrorMessage = "Please enter a valid Phone No")]
-        public string PhoneNumber { get; set; }
+        public int PhoneNumber { get; set; }
     }
     public class Settings
     {

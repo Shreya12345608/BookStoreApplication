@@ -19,7 +19,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        int Login(UserLogin login);
+        Registration Login(UserLogin login);
 
         /// <summary>
         /// Forger password
