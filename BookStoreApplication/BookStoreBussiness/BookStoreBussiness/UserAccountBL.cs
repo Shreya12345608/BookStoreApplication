@@ -20,7 +20,7 @@ namespace BookStoreBussiness.BookStoreBussiness
         //constructor 
         public UserAccountBL(IUserAccountRL BookStoreUser, IConfiguration configuration)
         {
-           
+
             this.BookStoreUser = BookStoreUser;
         }
 
@@ -71,27 +71,26 @@ namespace BookStoreBussiness.BookStoreBussiness
         }
 
 
-
-        public bool ResetPassword(ResetPassword reset, int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Method for reset password
         /// </summary>
-        /// <param name="resetPassword"></param>
+        /// <param name="reset"></param>
         /// <returns></returns>
-        //public bool ResetPassword(ResetPassword reset, int userId)
-        //{
-        //    try
-        //    {
-        //        return BookStoreUser.ResetPassword(reset, newPassword);
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
+        public bool ResetPassword(ResetPassword reset, int userId)
+        {
+            try
+            {
+                return BookStoreUser.ResetPassword(reset, userId);
+
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
+       
+
     }
 }

@@ -134,5 +134,35 @@ namespace BookStoreApplication.Controllers
             }
 
         }
+        /// <summary>
+        /// Controller method for Reset Password
+        /// </summary>
+        /// <param name="resetPassword"></param>
+        /// <returns></returns>
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        [Route("reset-password")]
+        public ActionResult ResetPassword([FromRoute] string Token, ResetPassword resetPassword)
+        {
+
+            try
+            {
+
+                ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+                int userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
+                //int userId = 0;
+                bool resetPaswrd = userAccountBL.ResetPassword(resetPassword, userId);
+                if (resetPaswrd)
+                {
+                    return Ok(new { Success = true, message = "Password Reset Successfull !" });
+                }
+                return NotFound(new { Sucess = false, message = "Failed to Reset Password. Given Email doesn't exist in database." });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message, StackTrace = ex.StackTrace });
+            }
+
+        }
     }
 }

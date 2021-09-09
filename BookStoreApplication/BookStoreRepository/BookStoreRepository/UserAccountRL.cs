@@ -227,9 +227,8 @@ namespace BookStoreRepository.BookStoreRepository
             }
 
         }
-       
-
-        public Registration GetUser(string UserEmail)
+      
+        public bool ResetPassword(ResetPassword reset, int userId)
         {
             throw new NotImplementedException();
         }

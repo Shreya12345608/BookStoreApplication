@@ -42,9 +42,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// <param name="resetPassword">Reset Password</param>
         /// <returns>boolean result</returns>
 
-        public bool ResetPassword(Registration reset, string newPassword);
-
-        public Registration GetUser(string userEmail);
+        public bool ResetPassword(ResetPassword reset, int userId);
 
     }
 
