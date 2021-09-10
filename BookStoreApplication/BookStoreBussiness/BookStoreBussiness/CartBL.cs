@@ -15,20 +15,25 @@ namespace BookStoreBussiness.BookStoreBussiness
         {
             this.cartRL = cartRL;
         }
-
+        /// <summary>
+        /// Add to cart details
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
         public object AddCartDetails(CartModel cart)
         {
             return this.cartRL.AddCartDetails(cart);
         }
 
-        public bool DeleteCartDetailsByCartId(int cartId)
-        {
-            return this.cartRL.DeleteCartByCartId(cartId);
-        }
 
-        public List<CartModel> GetAllBooksFromCart(string userEmail)
+        /// <summary>
+        /// get all book from cart
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        public List<CartModel> GetAllBooksFromCart(int userId)
         {
-            return this.cartRL.GetAllBooksFromCart(userEmail);
+            return this.cartRL.GetAllBooksFromCart(userId);
         }
     }
 }

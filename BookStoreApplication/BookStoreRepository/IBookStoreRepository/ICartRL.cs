@@ -20,14 +20,14 @@ namespace BookStoreRepository.IBookStoreRepository
         /// </summary>
         /// <param name="cartId"></param>
         /// <returns></returns>
-        bool DeleteCartByCartId(cartRequest cart);
+        bool DeleteCart(cartRequest cart);
 
         /// <summary>
         /// This is getting all  book details from cart method.
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        List<CartModel> GetAllBooksFromCart(string userEmail);
+        List<CartModel> GetAllBooksFromCart(int userId);
 
     }
 }

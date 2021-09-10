@@ -1,14 +1,19 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreModel.AccountModel;
 using BookStoreModel.CartModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
@@ -45,16 +50,25 @@ namespace BookStoreApplication.Controllers
                 return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
             }
         }
+      
+
+        private int getIdFromToken()
+        {
+            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+            int userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
+            return userId;
+        }
+
         /// <summary>
         /// This method is getting books details from cart.
         /// </summary>
         /// <param name="Email"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetAllBooksFromCart(string Email)
+        public IActionResult GetAllBooksFromCart(int userId)
         {
             string message;
-            var result = this.cartBL.GetAllBooksFromCart(Email);
+            var result = this.cartBL.GetAllBooksFromCart(userId);
             try
             {
                 if (!result.Equals(null))
@@ -72,30 +86,8 @@ namespace BookStoreApplication.Controllers
             }
         }
 
-        /// <summary>
-        /// This method is deleting cart details by taking cart Id.
-        /// </summary>
-        /// <param name="cartId"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        public IActionResult DeleteCartDetailsByCartId(int cartId)
-        {
-            string message;
-            try
-            {
-                if (this.cartBL.DeleteCartDetailsByCartId(cartId))
-                {
-                    message = "Successfully deleted cart deatils of given cartId";
-                    return this.Ok(new { message });
-                }
-                message = "Cart id is not match with our database.Please give correct CartId.";
-                return BadRequest(new { message });
-            }
-            catch (Exception ex)
-            {
 
-                return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
-            }
-        }
+      
+
     }
 }

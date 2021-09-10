@@ -12,7 +12,7 @@ namespace BookStoreBussiness.BookStoreBussiness
     {
         //instance variable
         private IAdminRL adminRL;
-        string Secret;
+     
         //constructor 
         public AdminBL(IAdminRL adminRL)
         {
