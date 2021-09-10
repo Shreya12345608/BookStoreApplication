@@ -25,6 +25,15 @@ namespace BookStoreBussiness.BookStoreBussiness
             return this.cartRL.AddCartDetails(cart);
         }
 
+        /// <summary>
+        /// Delete cart 
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        public bool DeleteCart(cartRequest cart)
+        {
+            return this.cartRL.DeleteCart(cart);
+        }
 
         /// <summary>
         /// get all book from cart

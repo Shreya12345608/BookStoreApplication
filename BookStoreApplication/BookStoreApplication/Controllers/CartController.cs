@@ -87,6 +87,39 @@ namespace BookStoreApplication.Controllers
         }
 
 
+        /// <summary>
+        /// This method is deleting cart details by taking cart Id.
+        /// </summary>
+        /// <param name="cartId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("{bookId}")]
+        public IActionResult DeleteCart(int bookId)
+        {
+            string message;
+            try
+            {
+                int userId = this.getIdFromToken();
+                cartRequest cart = new cartRequest
+                {
+                    BookId = bookId,
+                    userId = userId
+                };
+                bool result = cartBL.DeleteCart(cart);
+                if (result)
+                {
+                    message = "Successfully deleted cart details";
+                    return this.Ok(new { message });
+                }
+                message = "Cart id is not match with our database.Please give correct bookId.";
+                return BadRequest(new { message });
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
+            }
+        }
       
 
     }

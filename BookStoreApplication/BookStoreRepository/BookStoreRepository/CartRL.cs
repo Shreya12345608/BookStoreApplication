@@ -42,7 +42,45 @@ namespace BookStoreRepository.BookStoreRepository
             }
         }
 
-      
+        /// <summary>
+        /// delete cart
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        public bool DeleteCart(cartRequest cart)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Implementing the stored procedure
+                    SqlCommand command = new SqlCommand("spDeleteFromCart", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userId", cart.userId);
+                    command.Parameters.AddWithValue("@bookId", cart.BookId);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    //Return the result of the transaction 
+
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
 
         public List<CartModel> GetAllBooksFromCart(int userId)
         {
