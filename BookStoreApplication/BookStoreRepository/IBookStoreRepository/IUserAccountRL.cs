@@ -39,12 +39,9 @@ namespace BookStoreRepository.IBookStoreRepository
         /// <summary>
         /// Reset Password Method
         /// </summary>
-        /// <param name="resetPassword">Reset Password</param>
+        /// <param name="user">Reset Password</param>
         /// <returns>boolean result</returns>
-
-        public bool ResetPassword(ResetPassword reset, int userId);
+       public  Registration ResetPassword(Registration user, string password);
 
     }
-
-
 }

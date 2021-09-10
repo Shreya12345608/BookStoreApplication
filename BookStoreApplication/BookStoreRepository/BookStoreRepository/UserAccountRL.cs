@@ -97,7 +97,7 @@ namespace BookStoreRepository.BookStoreRepository
                         reges.fullName = reader["fullName"].ToString();
                         reges.userEmail = reader["userEmail"].ToString();
                         reges.Password = reader["Password"].ToString();
-                        reges.PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]);
+                        reges.PhoneNumber = reader["PhoneNumber"].ToString(); ;
                     }
                     bool result;
                     if (reges != null)
@@ -156,8 +156,8 @@ namespace BookStoreRepository.BookStoreRepository
                         reges.fullName = reader["fullName"].ToString();
                         reges.userEmail = reader["userEmail"].ToString();
                         reges.Password = reader["Password"].ToString();
-                        // reges.PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]);
-                      
+                        reges.PhoneNumber = reader["PhoneNumber"].ToString(); ;
+
                     }
                     if (reges != null)
                     {
@@ -246,6 +246,11 @@ namespace BookStoreRepository.BookStoreRepository
         }
        
         public bool ResetPassword(ResetPassword reset, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        Registration IUserAccountRL.ResetPassword(Registration user, string password)
         {
             throw new NotImplementedException();
         }

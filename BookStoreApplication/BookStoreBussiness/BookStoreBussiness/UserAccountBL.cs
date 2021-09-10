@@ -76,19 +76,8 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// </summary>
         /// <param name="reset"></param>
         /// <returns></returns>
-        public bool ResetPassword(ResetPassword reset, int userId)
-        {
-            try
-            {
-                return BookStoreUser.ResetPassword(reset, userId);
-
-            }
-            catch
-            {
-
-                throw;
-            }
-        }
+       
+        
 
         /// <summary>
         /// token
@@ -108,6 +97,11 @@ namespace BookStoreBussiness.BookStoreBussiness
 
                 throw;
             }
+        }
+
+        public Registration ResetPassword(string email, ResetPassword resetPassword)
+        {
+            throw new NotImplementedException();
         }
     }
 }

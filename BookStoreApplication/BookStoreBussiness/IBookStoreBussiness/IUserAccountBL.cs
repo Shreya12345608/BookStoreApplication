@@ -37,7 +37,7 @@ namespace BookStoreBussiness.IBookStoreBussiness
         /// </summary>
         /// <param name="resetPassword">Reset Password</param>
         /// <returns>boolean result</returns>
-        public bool ResetPassword(ResetPassword reset, int userId);
+        public Registration ResetPassword(string email, ResetPassword resetPassword);
     }
     
    

@@ -38,9 +38,11 @@ namespace BookStoreApplication
             services.AddScoped<IUserAccountBL, UserAccountBL>();
             services.AddScoped<IUserAccountRL, UserAccountRL>();
 
-
             services.AddScoped<IBookDetailsRL, BookDetailsRL>();
             services.AddScoped<IBookDetailsBL, BookDetailsBL>();
+
+            services.AddScoped<ICartRL, CartRL>();
+            services.AddScoped<ICartBL, CartBL>();
 
 
             //services.Configure<Settings>(Configuration.GetSection("AppSettings"));
