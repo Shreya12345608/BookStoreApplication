@@ -98,6 +98,7 @@ namespace BookStoreRepository.BookStoreRepository
                     while (sqlreader.Read())
                     {
                         var cart = new CartModel();
+                        cart.userId = Convert.ToInt32(sqlreader["userId"]);
                         cart.BookId = Convert.ToInt32(sqlreader["BookId"]);
                         cart.CartID = Convert.ToInt32(sqlreader["CartID"]);
                         cart.Quantity = Convert.ToInt32(sqlreader["Quantity"]);

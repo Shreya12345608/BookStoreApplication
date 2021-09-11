@@ -16,7 +16,7 @@ namespace BookStoreBussiness.BookStoreBussiness
     {
         //instance variable
         private IUserAccountRL BookStoreUser;
-        string Secret;
+       
         //constructor 
         public UserAccountBL(IUserAccountRL BookStoreUser, IConfiguration configuration)
         {
@@ -99,9 +99,16 @@ namespace BookStoreBussiness.BookStoreBussiness
             }
         }
 
-        public Registration ResetPassword(string email, ResetPassword resetPassword)
+        public bool ResetPassword(ResetPassword reset, int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return BookStoreUser.ResetPassword(reset,userId);
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

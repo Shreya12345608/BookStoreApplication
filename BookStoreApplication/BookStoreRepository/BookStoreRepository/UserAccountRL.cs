@@ -90,7 +90,7 @@ namespace BookStoreRepository.BookStoreRepository
                     command.Parameters.AddWithValue("@userEmail", userEmail);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                   
+
                     while (reader.Read())
                     {
                         reges.Userid = Convert.ToInt32(reader["userId"]);
@@ -122,7 +122,7 @@ namespace BookStoreRepository.BookStoreRepository
             }
             finally
             {
-                // connection.close();
+                connection.Close();
             }
         }
 
@@ -164,7 +164,7 @@ namespace BookStoreRepository.BookStoreRepository
                         return reges;
                     }
                     return null;
-                    
+
                 }
             }
             catch
@@ -209,10 +209,11 @@ namespace BookStoreRepository.BookStoreRepository
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool ResetPassword(Registration reset, string newPassword)
-        {
+        
+        public bool ResetPassword(ResetPassword reset, int userId)
 
-            reset.Password = newPassword;
+        {
+          
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
@@ -220,8 +221,8 @@ namespace BookStoreRepository.BookStoreRepository
                 {
                     SqlCommand cmd = new SqlCommand("spResetPassword", connection);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Email", reset.userEmail);
-                    cmd.Parameters.AddWithValue("@newPassword", reset.Password);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@Password", reset.NewPassword);
                     connection.Open();
                     var result = cmd.ExecuteNonQuery();
                     connection.Close();
@@ -240,19 +241,8 @@ namespace BookStoreRepository.BookStoreRepository
             }
             finally
             {
-                //   connection.close();
+                connection.Close();
             }
-
-        }
-       
-        public bool ResetPassword(ResetPassword reset, int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        Registration IUserAccountRL.ResetPassword(Registration user, string password)
-        {
-            throw new NotImplementedException();
         }
     }
 }

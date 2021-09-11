@@ -67,13 +67,14 @@ namespace BookStoreApplication.Controllers
         [HttpGet]
         public IActionResult GetAllBooksFromCart(int userId)
         {
+
             string message;
             var result = this.cartBL.GetAllBooksFromCart(userId);
             try
             {
                 if (!result.Equals(null))
                 {
-                    message = "Successfully shown all book details  in cart of given email.";
+                    message = "Successfully shown all book details  in cart of given userId.";
                     return this.Ok(new { message, result });
                 }
                 message = "Please enter correct email,and retry!!";
