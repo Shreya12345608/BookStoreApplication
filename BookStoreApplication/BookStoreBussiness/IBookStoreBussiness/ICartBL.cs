@@ -13,7 +13,7 @@ namespace BookStoreBussiness.IBookStoreBussiness
         /// </summary>
         /// <param name="cartModel"></param>
         /// <returns></returns>
-        public object AddCartDetails(CartModel cart);
+        public object AddCartDetails(CartModel cart,int userId);
 
         /// <summary>
         /// This is deleting cart details method 

@@ -1,4 +1,5 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreModel.AddressModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     [Route("api/[controller]")]
     [ApiController]
     public class AddressController : ControllerBase
@@ -22,16 +25,17 @@ namespace BookStoreApplication.Controllers
         {
             this.addressBL = addressBL;
         }
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
 
-        public ActionResult AddNewAddress(string address)
+        public ActionResult AddNewAddress(AddressModel address)
         {
-            int userID = this.getUserId();
             string Message;
             try
             {
-                var response = this.addressBL.AddNewAddress(userID, address);
+                ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+                int userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
+
+                var response = this.addressBL.AddNewAddress(userId, address);
                 if (response)
                 {
                     Message = "Address Added Successfully";
@@ -46,11 +50,34 @@ namespace BookStoreApplication.Controllers
             }
         }
 
-        private int getUserId()
+       
+        private int GetUserIDFromToken()
         {
-            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-            int userId = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
-            return userId;
+            return Convert.ToInt32(User.FindFirst(user => user.Type == "userId").Value);
+        }
+        [HttpGet]
+        [Route("addressList")]
+        public ActionResult AllAddress(int userId)
+        {
+            int useeId = GetUserIDFromToken();
+            string Message;
+            try
+            {
+                //  ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
+                //int userIds = Convert.ToInt32(principal.Claims.SingleOrDefault(c => c.Type == "userId").Value);
+                List<AddressModel> result = this.addressBL.GetAllAddress(useeId);
+                if (result != null)
+                {
+                    Message = "List Of Address Of userId  " + useeId;
+                    return this.Ok(new { Status = true, Message, Data = result });
+                }
+                Message = "You dont have any address add new address for  " + useeId;
+                return this.BadRequest(new { Status = false, Message, Data = result });
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Exception", Data = e });
+            }
         }
     }
 

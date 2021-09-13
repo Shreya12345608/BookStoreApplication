@@ -20,9 +20,9 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// </summary>
         /// <param name="cart"></param>
         /// <returns></returns>
-        public object AddCartDetails(CartModel cart)
+        public object AddCartDetails(CartModel cart, int userId)
         {
-            return this.cartRL.AddCartDetails(cart);
+            return this.cartRL.AddCartDetails(cart,userId);
         }
 
         /// <summary>

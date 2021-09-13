@@ -1,4 +1,5 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreModel.AddressModel;
 using BookStoreRepository.IBookStoreRepository;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,14 @@ namespace BookStoreBussiness.BookStoreBussiness
             this.addressRL = addressRL;
         }
 
-        public bool AddNewAddress(int userId, string address)
+        public bool AddNewAddress(int userId, AddressModel address)
         {
             return this.addressRL.AddNewAddress(userId, address);
         }
 
-        public List<IEnumerable<string>> GetAllAddress(int userId)
+        public List<AddressModel> GetAllAddress(int userId)
         {
-            throw new NotImplementedException();
+            return this.addressRL.GetAllAddress(userId);
         }
     }
 }

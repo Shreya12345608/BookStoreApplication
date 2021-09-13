@@ -33,7 +33,8 @@ namespace BookStoreApplication.Controllers
         public IActionResult AddCartDetails(CartModel cart)
         {
             string message;
-            var result = this.cartBL.AddCartDetails(cart);
+            int userID = getIdFromToken();
+            var result = this.cartBL.AddCartDetails(cart, userID);
             try
             {
                 if (!result.Equals(null))
@@ -67,9 +68,10 @@ namespace BookStoreApplication.Controllers
         [HttpGet]
         public IActionResult GetAllBooksFromCart(int userId)
         {
+            int userID = getIdFromToken();
 
             string message;
-            var result = this.cartBL.GetAllBooksFromCart(userId);
+            var result = this.cartBL.GetAllBooksFromCart(userID);
             try
             {
                 if (!result.Equals(null))

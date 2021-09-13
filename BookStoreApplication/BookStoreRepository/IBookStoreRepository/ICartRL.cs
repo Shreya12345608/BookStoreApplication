@@ -13,7 +13,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// </summary>
         /// <param name="cartModel"></param>
         /// <returns></returns>
-        object AddCartDetails(CartModel cartModel);
+        object AddCartDetails(CartModel cartModel,int userId);
 
         /// <summary>
         /// This is deleting cart details method by taking cart id.

@@ -1,4 +1,5 @@
-﻿using BookStoreRepository.IBookStoreRepository;
+﻿using BookStoreModel.AddressModel;
+using BookStoreRepository.IBookStoreRepository;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace BookStoreRepository.BookStoreRepository
             connectionString = configuration.GetSection("ConnectionStrings").GetSection("bookStoreDB").Value;
         }
 
-        public bool AddNewAddress(int userId, string address)
+        public bool AddNewAddress(int userId, AddressModel address)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -32,7 +33,7 @@ namespace BookStoreRepository.BookStoreRepository
                     SqlCommand command = new SqlCommand("spAddNewAddress", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@userId", userId);
-                    command.Parameters.AddWithValue("@address",address);
+                    command.Parameters.AddWithValue("@address", address.address);
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     connection.Close();
@@ -55,9 +56,35 @@ namespace BookStoreRepository.BookStoreRepository
             }
         }
 
-        public List<IEnumerable<string>> GetAllAddress(int userId)
+
+        public List<AddressModel> GetAllAddress(int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<AddressModel> addressList = new List<AddressModel>();
+                SqlConnection connection = new SqlConnection(connectionString);
+                {
+                    SqlCommand command = new SqlCommand("spGetAllAddress", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userId", userId);
+                    connection.Open();
+                    SqlDataReader sqlreader = command.ExecuteReader();
+                    while (sqlreader.Read())
+                    {
+                        AddressModel address = new AddressModel();
+                        address.address = sqlreader["address"].ToString();
+
+                        addressList.Add(address);
+                    }
+                    connection.Close();
+                }
+                return addressList;
+            }
+
+            catch
+            {
+                throw;
+            }
         }
     }
 }

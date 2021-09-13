@@ -17,7 +17,7 @@ namespace BookStoreRepository.BookStoreRepository
             connectionString = configuration.GetSection("ConnectionStrings").GetSection("bookStoreDB").Value;
         }
 
-        public object AddCartDetails(CartModel cartModel)
+        public object AddCartDetails(CartModel cartModel, int userId)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -27,7 +27,7 @@ namespace BookStoreRepository.BookStoreRepository
                     SqlCommand command = new SqlCommand("spAddToCart", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     // cmd.Parameters.AddWithValue("@BookId", booksDetail.BookId);
-                    command.Parameters.AddWithValue("@userId", cartModel.userId);
+                    command.Parameters.AddWithValue("@userId", userId);
                     command.Parameters.AddWithValue("@bookId", cartModel.BookId);
 
                     connection.Open();
@@ -41,34 +41,11 @@ namespace BookStoreRepository.BookStoreRepository
                 throw;
             }
         }
-
 
         public object decreaseFromtDetails(CartModel cartModel)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    SqlCommand command = new SqlCommand("spAddToCart", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    // cmd.Parameters.AddWithValue("@BookId", booksDetail.BookId);
-                    command.Parameters.AddWithValue("@userId", cartModel.userId);
-                    command.Parameters.AddWithValue("@bookId", cartModel.BookId);
-
-                    connection.Open();
-                    int i = command.ExecuteNonQuery();
-                    connection.Close();
-                    return true;
-                }
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
-
-
 
         /// <summary>
         /// delete cart
