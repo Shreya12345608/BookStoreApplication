@@ -44,6 +44,12 @@ namespace BookStoreBussiness.BookStoreBussiness
         {
             return this.cartRL.GetAllBooksFromCart(userId);
         }
+        public object decreaseFromtDetails(CartModel cartModel)
+        {
+            return this.cartRL.decreaseFromtDetails(cartModel);
+        }
+
+
     }
 }
 

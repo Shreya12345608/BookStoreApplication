@@ -25,9 +25,9 @@ namespace BookStoreBussiness.BookStoreBussiness
             return this.adminRL.LoginAdmin(user);
         }
 
-         public bool RegisterAdmin(Admin userData)
+         public bool RegisterAdmin(Admin adminData)
         {
-            return this.adminRL.RegisterAdmin(userData);
+            return this.adminRL.RegisterAdmin(adminData);
         }
     }
 }

@@ -42,6 +42,34 @@ namespace BookStoreRepository.BookStoreRepository
             }
         }
 
+
+        public object decreaseFromtDetails(CartModel cartModel)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("spAddToCart", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    // cmd.Parameters.AddWithValue("@BookId", booksDetail.BookId);
+                    command.Parameters.AddWithValue("@userId", cartModel.userId);
+                    command.Parameters.AddWithValue("@bookId", cartModel.BookId);
+
+                    connection.Open();
+                    int i = command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
         /// <summary>
         /// delete cart
         /// </summary>

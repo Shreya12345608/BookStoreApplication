@@ -44,6 +44,11 @@ namespace BookStoreApplication
             services.AddScoped<ICartRL, CartRL>();
             services.AddScoped<ICartBL, CartBL>();
 
+            services.AddScoped<IAdminBL, AdminBL>();
+            services.AddScoped<IAdminRL, AdminRL>();
+
+            services.AddScoped<IAddressBL,AddressBL>();
+            services.AddScoped<IAddressRL, AddressRL>();
 
             //services.Configure<Settings>(Configuration.GetSection("AppSettings"));
             var authenticationSettings = Configuration.GetSection("AppSettings");
@@ -122,7 +127,7 @@ namespace BookStoreApplication
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fundoo API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book Store API");
 
                 // To serve SwaggerUI at application's root (http://localhost:<port>/) page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = string.Empty;

@@ -52,23 +52,6 @@ namespace BookStoreApplication.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.GetBaseException().GetType() == typeof(SqlException))
-                {
-                    Int32 ErrorCode = ((SqlException)ex.InnerException).Number;
-                    switch (ErrorCode)
-                    {
-                        case 2627:  // Unique constraint error
-                            return this.BadRequest(new { Success = false, Message = " Unique constraint error", StackTrace = ex.StackTrace });
-
-                        case 547:   // Constraint check violation
-                            return this.BadRequest(new { Success = false, Message = " Constraint check violation", StackTrace = ex.StackTrace });
-
-                        case 2601:  // Duplicated key row error
-                            return this.BadRequest(new { Success = false, Message = " Duplicated Email ID. Please enter Unique Email IDow ", StackTrace = ex.StackTrace });
-                        default:
-                            break;
-                    }
-                }
                 return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
             }
         }

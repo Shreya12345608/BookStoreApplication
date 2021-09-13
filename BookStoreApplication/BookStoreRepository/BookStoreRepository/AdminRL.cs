@@ -25,7 +25,7 @@ namespace BookStoreRepository.BookStoreRepository
             throw new NotImplementedException();
         }
 
-        public bool RegisterAdmin(Admin userData)
+        public bool RegisterAdmin(Admin adminData)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -33,12 +33,13 @@ namespace BookStoreRepository.BookStoreRepository
                 using (connection)
                 {
                     // Implementing the stored procedure
-                    SqlCommand command = new SqlCommand("spuserRegistration", connection);
+                    SqlCommand command = new SqlCommand("spadminRegistration", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@fullName", userData.fullName);
-                    command.Parameters.AddWithValue("@userEmail", userData.userEmail);
-                    command.Parameters.AddWithValue("@Password", userData.Password);
-                    command.Parameters.AddWithValue("@PhoneNumber", userData.PhoneNumber);
+                    command.Parameters.AddWithValue("@fullName", adminData.fullName);
+                    command.Parameters.AddWithValue("@userEmail", adminData.userEmail);
+                    command.Parameters.AddWithValue("@Password", adminData.Password);
+                    command.Parameters.AddWithValue("@roleName", adminData.roleName);
+                    command.Parameters.AddWithValue("@PhoneNumber", adminData.PhoneNumber);
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     connection.Close();
@@ -60,5 +61,44 @@ namespace BookStoreRepository.BookStoreRepository
                 connection.Close();
             }
         }
+        public Registration LoginAdmin(string userEmail)
+        {
+            Registration reges = new Registration();
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Implementing the stored procedure
+                    SqlCommand command = new SqlCommand("spadminLogin", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userEmail",userEmail);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        reges.Userid = Convert.ToInt32(reader["userId"]);
+                        reges.fullName = reader["fullName"].ToString();
+                        reges.userEmail = reader["userEmail"].ToString();
+                        reges.Password = reader["Password"].ToString();
+                        reges.PhoneNumber = reader["PhoneNumber"].ToString(); 
+                    }
+                    if (reges != null)
+                    {
+                        return reges;
+                    }
+                    return null;
+
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+
+
+        }  
     }
 }

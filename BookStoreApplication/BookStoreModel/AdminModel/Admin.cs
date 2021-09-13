@@ -27,6 +27,7 @@ namespace BookStoreModel.AdminModel
         [Required(ErrorMessage = "Phone No is required")]
         [RegularExpression(@"^[0-9]{10}", ErrorMessage = "Please enter a valid Phone No")]
         public string PhoneNumber { get; set; }
+       public string roleName { get; set; }
     }
 }
 

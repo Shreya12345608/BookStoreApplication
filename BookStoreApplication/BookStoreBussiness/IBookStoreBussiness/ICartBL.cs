@@ -28,6 +28,15 @@ namespace BookStoreBussiness.IBookStoreBussiness
         /// <param name="userId"></param>
         /// <returns></returns>
         List<CartModel> GetAllBooksFromCart(int userId);
+
+        /// <summary>
+        /// decrease from cart
+        /// </summary>
+        /// <param name="cartModel"></param>
+        /// <returns></returns>
+        public object decreaseFromtDetails(CartModel cartModel);
     }
+
+
 }
 

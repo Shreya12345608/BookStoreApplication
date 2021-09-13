@@ -16,7 +16,7 @@ namespace BookStoreBussiness.BookStoreBussiness
     {
         //instance variable
         private IUserAccountRL BookStoreUser;
-       
+
         //constructor 
         public UserAccountBL(IUserAccountRL BookStoreUser, IConfiguration configuration)
         {
@@ -76,8 +76,8 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// </summary>
         /// <param name="reset"></param>
         /// <returns></returns>
-       
-        
+
+
 
         /// <summary>
         /// token
@@ -103,7 +103,7 @@ namespace BookStoreBussiness.BookStoreBussiness
         {
             try
             {
-                return BookStoreUser.ResetPassword(reset,userId);
+                return BookStoreUser.ResetPassword(reset, userId);
             }
             catch
             {

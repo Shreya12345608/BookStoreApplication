@@ -190,8 +190,9 @@ namespace BookStoreRepository.BookStoreRepository
                 Subject = new ClaimsIdentity(new Claim[] {
                         new Claim(ClaimTypes.Email, userEmail),
                         new Claim("userId", userId.ToString(), ClaimValueTypes.Integer),
+                        // new Claim(ClaimTypes.Role , role),
                     }),
-                Expires = DateTime.UtcNow.AddMinutes(120),
+                Expires = DateTime.UtcNow.AddMinutes(360),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescpritor);
