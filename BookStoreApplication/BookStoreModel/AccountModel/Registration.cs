@@ -28,6 +28,7 @@ namespace BookStoreModel.AccountModel
         /// This is  phone number of users.
          [Required(ErrorMessage = "Phone No is required")]
         public string PhoneNumber { get; set; }
+        public string roleName { get; set; }
     }
     public class Settings
     {

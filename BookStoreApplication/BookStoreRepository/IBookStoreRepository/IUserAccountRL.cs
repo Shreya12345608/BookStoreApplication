@@ -34,7 +34,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// <param name="userEmail"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public string CreateToken(string userEmail, int userId);
+        public string CreateToken(string userEmail, int userId, string roleName);
 
         /// <summary>
         /// Reset Password Method

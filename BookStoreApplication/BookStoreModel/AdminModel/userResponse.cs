@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BookStoreModel.AdminModel
 {
     public class userResponse
     {
-      
+
         /// <summary>
-        /// userid
+        /// This is user email
         /// </summary>
-        public int Userid { get; set; }
-     
-        /// <summary>
-        /// full name
-        /// </summary>
-        public string fullName { get; set; }
-        
-        /// <summary>
-        /// userEmail
-        /// </summary>
+        [Required(ErrorMessage = "Email Address is Required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Display(Name = "Email")]
         public string userEmail { get; set; }
-       
+
         /// <summary>
-        /// role
+        /// This is user password
         /// </summary>
-        public string Role { get; set; }
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
 }

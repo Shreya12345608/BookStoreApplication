@@ -72,7 +72,7 @@ namespace BookStoreApplication.Controllers
                 if (result != null)
                 {
                    
-                    string Token = userAccountBL.CreateToken(result.userEmail, result.Userid);
+                    string Token = userAccountBL.CreateToken(result.userEmail, result.Userid, result.roleName);
                     message = "Login done successfully.";
                     return this.Ok(new { message, login.userEmail, Token });
                 }
@@ -122,7 +122,7 @@ namespace BookStoreApplication.Controllers
         /// </summary>
         /// <param name="resetPassword"></param>
         /// <returns></returns>
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         [HttpPut]
         [Route("reset-password")]
         public ActionResult ResetPassword( ResetPassword resetPassword)

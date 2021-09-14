@@ -31,7 +31,7 @@ namespace BookStoreBussiness.IBookStoreBussiness
         public bool ForgotPassword(string userEmail);
 
         public bool ResetPassword(ResetPassword reset, int userId);
-        public string CreateToken(string userEmail, int userId);
+        public string CreateToken(string userEmail, int userId, string roleName);
 
     }
 

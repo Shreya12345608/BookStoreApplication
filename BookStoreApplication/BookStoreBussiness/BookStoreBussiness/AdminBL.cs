@@ -20,10 +20,16 @@ namespace BookStoreBussiness.BookStoreBussiness
             this.adminRL = adminRL;
         }
 
-        public userResponse LoginAdmin(Registration user)
+        /// <summary>
+        /// login  Book Store
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        public Admin Login(UserLogin login)
         {
-            return this.adminRL.LoginAdmin(user);
+            return this.adminRL.Login(login);
         }
+     
 
          public bool RegisterAdmin(Admin adminData)
         {

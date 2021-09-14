@@ -85,11 +85,11 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// <param name="userEmail"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public string CreateToken(string userEmail, int userId)
+        public string CreateToken(string userEmail, int userId, string roleName)
         {
             try
             {
-                return BookStoreUser.CreateToken(userEmail, userId);
+                return BookStoreUser.CreateToken(userEmail, userId, roleName);
 
             }
             catch

@@ -48,6 +48,7 @@ namespace BookStoreRepository.BookStoreRepository
                     command.Parameters.AddWithValue("@userEmail", user.userEmail);
                     command.Parameters.AddWithValue("@Password", user.Password);
                     command.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
+                    command.Parameters.AddWithValue("@roleName", "User");
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     connection.Close();
@@ -102,7 +103,7 @@ namespace BookStoreRepository.BookStoreRepository
                     bool result;
                     if (reges != null)
                     {
-                        string token = CreateToken(reges.userEmail, reges.Userid);
+                        string token = CreateToken(reges.userEmail, reges.Userid,reges.roleName);
                         msmqUtility msmq = new msmqUtility(Secret);
                         msmq.SendMessage(userEmail, token);
 
@@ -156,7 +157,8 @@ namespace BookStoreRepository.BookStoreRepository
                         reges.fullName = reader["fullName"].ToString();
                         reges.userEmail = reader["userEmail"].ToString();
                         reges.Password = reader["Password"].ToString();
-                        reges.PhoneNumber = reader["PhoneNumber"].ToString(); ;
+                        reges.PhoneNumber = reader["PhoneNumber"].ToString();
+                        reges.roleName = reader["roleName"].ToString(); 
 
                     }
                     if (reges != null)
@@ -180,7 +182,7 @@ namespace BookStoreRepository.BookStoreRepository
         /// <param name="userEmail"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public string CreateToken(string userEmail, int userId)
+        public string CreateToken(string userEmail, int userId, string roleName)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -190,7 +192,7 @@ namespace BookStoreRepository.BookStoreRepository
                 Subject = new ClaimsIdentity(new Claim[] {
                         new Claim(ClaimTypes.Email, userEmail),
                         new Claim("userId", userId.ToString(), ClaimValueTypes.Integer),
-                        // new Claim(ClaimTypes.Role , role),
+                        new Claim(ClaimTypes.Role , roleName),
                     }),
                 Expires = DateTime.UtcNow.AddMinutes(360),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

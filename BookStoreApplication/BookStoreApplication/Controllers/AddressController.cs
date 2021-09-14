@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
 
     [Route("api/[controller]")]
     [ApiController]

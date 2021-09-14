@@ -38,8 +38,8 @@ namespace BookStoreRepository.BookStoreRepository
                     command.Parameters.AddWithValue("@fullName", adminData.fullName);
                     command.Parameters.AddWithValue("@userEmail", adminData.userEmail);
                     command.Parameters.AddWithValue("@Password", adminData.Password);
-                    command.Parameters.AddWithValue("@roleName", adminData.roleName);
                     command.Parameters.AddWithValue("@PhoneNumber", adminData.PhoneNumber);
+                    command.Parameters.AddWithValue("@roleName", "Admin");
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     connection.Close();
@@ -61,9 +61,15 @@ namespace BookStoreRepository.BookStoreRepository
                 connection.Close();
             }
         }
-        public Registration LoginAdmin(string userEmail)
+        /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+
+        public Admin Login(UserLogin login)
         {
-            Registration reges = new Registration();
+            Admin reges = new Admin();
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
@@ -72,17 +78,20 @@ namespace BookStoreRepository.BookStoreRepository
                     // Implementing the stored procedure
                     SqlCommand command = new SqlCommand("spadminLogin", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@userEmail",userEmail);
+                    command.Parameters.AddWithValue("@userEmail", login.userEmail);
+                    command.Parameters.AddWithValue("@Password", login.Password);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        reges.Userid = Convert.ToInt32(reader["userId"]);
+                        reges.Adminid = Convert.ToInt32(reader["Adminid"]);
                         reges.fullName = reader["fullName"].ToString();
                         reges.userEmail = reader["userEmail"].ToString();
                         reges.Password = reader["Password"].ToString();
-                        reges.PhoneNumber = reader["PhoneNumber"].ToString(); 
+                        reges.PhoneNumber = reader["PhoneNumber"].ToString();
+                        reges.roleName = reader["roleName"].ToString();
+
                     }
                     if (reges != null)
                     {
@@ -97,8 +106,6 @@ namespace BookStoreRepository.BookStoreRepository
 
                 throw;
             }
-
-
-        }  
+        }
     }
 }

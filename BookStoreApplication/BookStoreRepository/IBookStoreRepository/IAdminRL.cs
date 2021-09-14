@@ -16,10 +16,10 @@ namespace BookStoreRepository.IBookStoreRepository
         public bool RegisterAdmin(Admin userData);
 
         /// <summary>
-        /// login admin
+        /// Login for User
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
-        userResponse LoginAdmin(Registration user);
+        Admin Login(UserLogin login);
     }
 }

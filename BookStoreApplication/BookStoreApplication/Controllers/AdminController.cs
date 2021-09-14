@@ -21,47 +21,53 @@ namespace BookStoreApplication.Controllers
             this.adminBL = adminBL;
             this.userAccountBL = userAccountBL;
         }
-        //[HttpPost]
-        //public IActionResult RegisterAdmin(Admin admiUser)
-        //{
-        //    string message;
-        //    try
-        //    {
-        //        var userResponse = adminBL.RegisterAdmin(admiUser);
-        //        if (userResponse)
-        //        {
-        //            message = "Admin Registration Successfully  Done";
-        //            return Ok(new { Success = false, message, data = userResponse });
-        //        }
+        [HttpPost]
+        public IActionResult RegisterAdmin(Admin admiUser)
+        {
+            string message;
+            try
+            {
+                var userResponse = adminBL.RegisterAdmin(admiUser);
+                if (userResponse)
+                {
+                    message = "Admin Registration Successfully  Done";
+                    return Ok(new { Success = true, message});
+                }
 
-        //        message = "Registration Failed, User Already Exists.Please Check Email";
+                message = "Registration Failed, User Already Exists.Please Check Email";
 
-        //        return Ok(new { Success = false, message});
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { Success = false, Message = ex.Message });
-        //    }
-        //}
+                return Ok(new { Success = false, message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
+        }
 
-        //[HttpPost("Login")]
-        //public ActionResult LoginUser(UserLogin userData)
-        //{
-        //    try
-        //    {
-        //        var user = userAccountBL.Login(userData);
-        //        if (user != null)
-        //        {
-        //            //string token = userAccountBL.CreateToken(user.userEmail, user.Userid, user.Role);
-        //            return Ok(new { Success = false, Message = "Login Successfull", data = user });
-        //        }
-        //        return Ok(new { Success = false, Message = "Login Failed" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { Success = false, Message = ex.Message });
-        //    }
-        //}
+        [HttpPost]
+        [Route("Login")]
+        public IActionResult Login(UserLogin login)
+        {
+            string message;
+
+            try
+            {
+                var result = this.adminBL.Login(login);
+                if (result != null)
+                {
+
+                    string Token = userAccountBL.CreateToken(result.userEmail, result.Adminid, result.roleName);
+                    message = "Login done successfully.";
+                    return this.Ok(new { message, login.userEmail, Token });
+                }
+                message = "Please check email and password and try again!!";
+                return BadRequest(new { message });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, Message = ex.Message, StackTrace = ex.StackTrace });
+            }
+        }
 
     }
 }
