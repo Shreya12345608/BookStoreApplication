@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
@@ -66,7 +66,7 @@ namespace BookStoreApplication.Controllers
         /// <param name="Email"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetAllBooksFromCart(int userId)
+        public IActionResult GetAllBooksFromCart()
         {
             int userID = getIdFromToken();
 
@@ -96,8 +96,7 @@ namespace BookStoreApplication.Controllers
         /// <param name="cartId"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{bookId}")]
-        public IActionResult DeleteCart(int bookId)
+        public IActionResult DeleteCart(int cartId)
         {
             string message;
             try
@@ -105,8 +104,7 @@ namespace BookStoreApplication.Controllers
                 int userId = this.getIdFromToken();
                 cartRequest cart = new cartRequest
                 {
-                    BookId = bookId,
-                    userId = userId
+                    CartID = cartId
                 };
                 bool result = cartBL.DeleteCart(cart);
                 if (result)

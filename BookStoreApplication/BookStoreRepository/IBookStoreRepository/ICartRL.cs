@@ -27,7 +27,7 @@ namespace BookStoreRepository.IBookStoreRepository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<CartModel> GetAllBooksFromCart(int userId);
+        List<cartRequest> GetAllBooksFromCart(int userId);
         /// <summary>
         /// decrease from cart
         /// </summary>

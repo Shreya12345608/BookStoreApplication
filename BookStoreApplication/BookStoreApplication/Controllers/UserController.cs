@@ -3,6 +3,7 @@ using BookStoreBussiness.IBookStoreBussiness;
 using BookStoreModel.AccountModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace BookStoreApplication.Controllers
 {
+    [EnableCors()]
 
     [Route("api/[controller]")]
     [ApiController]
@@ -61,7 +63,6 @@ namespace BookStoreApplication.Controllers
         /// <param name="login"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("UserLogin")]
         public IActionResult Login(UserLogin login)
         {
             string message;

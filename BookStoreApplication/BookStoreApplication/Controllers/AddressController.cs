@@ -57,7 +57,7 @@ namespace BookStoreApplication.Controllers
         }
         [HttpGet]
         [Route("addressList")]
-        public ActionResult AllAddress(int userId)
+        public ActionResult AllAddress()
         {
             int useeId = GetUserIDFromToken();
             string Message;

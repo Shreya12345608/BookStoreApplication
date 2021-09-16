@@ -26,7 +26,6 @@ namespace BookStoreRepository.BookStoreRepository
                 {
                     SqlCommand command = new SqlCommand("spAddToCart", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    // cmd.Parameters.AddWithValue("@BookId", booksDetail.BookId);
                     command.Parameters.AddWithValue("@userId", userId);
                     command.Parameters.AddWithValue("@bookId", cartModel.BookId);
 
@@ -62,8 +61,7 @@ namespace BookStoreRepository.BookStoreRepository
                     // Implementing the stored procedure
                     SqlCommand command = new SqlCommand("spDeleteFromCart", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@userId", cart.userId);
-                    command.Parameters.AddWithValue("@bookId", cart.BookId);
+                    command.Parameters.AddWithValue("@CartId", cart.CartID);
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     connection.Close();
@@ -87,11 +85,11 @@ namespace BookStoreRepository.BookStoreRepository
             }
         }
 
-        public List<CartModel> GetAllBooksFromCart(int userId)
+        public List<cartRequest> GetAllBooksFromCart(int userId)
         {
             try
             {
-                List<CartModel> cartlist = new List<CartModel>();
+                List<cartRequest> cartlist = new List<cartRequest>();
                 SqlConnection connection = new SqlConnection(connectionString);
                 using (connection)
                 {
@@ -102,12 +100,16 @@ namespace BookStoreRepository.BookStoreRepository
                     SqlDataReader sqlreader = command.ExecuteReader();
                     while (sqlreader.Read())
                     {
-                        var cart = new CartModel();
-                        cart.userId = Convert.ToInt32(sqlreader["userId"]);
+                        var cart = new cartRequest();
                         cart.BookId = Convert.ToInt32(sqlreader["BookId"]);
                         cart.CartID = Convert.ToInt32(sqlreader["CartID"]);
-                        //cart.Price = Convert.ToDouble(sqlreader["Price"]);
-                        //cart.TotalPrice = Convert.ToInt32(sqlreader["Price"]) * Convert.ToInt32(sqlreader["Count"]);
+                        cart.BookName = sqlreader["BookName"].ToString();
+                        cart.AuthorName =sqlreader["AuthorName"].ToString();
+                        cart.Description = sqlreader["Description"].ToString();
+                        cart.Quantity = Convert.ToInt32(sqlreader["Quantity"]);
+                        cart.Price = Convert.ToInt32(sqlreader["Price"]);
+                        cart.BookImage = sqlreader["BookImage"].ToString();
+                       // cart.TotalPrice = Convert.ToInt32(sqlreader["Price"]) * Convert.ToInt32(sqlreader["Count"]);
                         cartlist.Add(cart);
                     }
                     connection.Close();

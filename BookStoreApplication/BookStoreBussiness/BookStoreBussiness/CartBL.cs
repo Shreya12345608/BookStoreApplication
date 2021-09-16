@@ -40,7 +40,7 @@ namespace BookStoreBussiness.BookStoreBussiness
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>
-        public List<CartModel> GetAllBooksFromCart(int userId)
+        public List<cartRequest> GetAllBooksFromCart(int userId)
         {
             return this.cartRL.GetAllBooksFromCart(userId);
         }

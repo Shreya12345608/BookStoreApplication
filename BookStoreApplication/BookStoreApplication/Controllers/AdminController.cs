@@ -21,31 +21,30 @@ namespace BookStoreApplication.Controllers
             this.adminBL = adminBL;
             this.userAccountBL = userAccountBL;
         }
+        //[HttpPost]
+        //public IActionResult RegisterAdmin(Admin admiUser)
+        //{
+        //    string message;
+        //    try
+        //    {
+        //        var userResponse = adminBL.RegisterAdmin(admiUser);
+        //        if (userResponse)
+        //        {
+        //            message = "Admin Registration Successfully  Done";
+        //            return Ok(new { Success = true, message});
+        //        }
+
+        //        message = "Registration Failed, User Already Exists.Please Check Email";
+
+        //        return Ok(new { Success = false, message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { Success = false, Message = ex.Message });
+        //    }
+        //}
+
         [HttpPost]
-        public IActionResult RegisterAdmin(Admin admiUser)
-        {
-            string message;
-            try
-            {
-                var userResponse = adminBL.RegisterAdmin(admiUser);
-                if (userResponse)
-                {
-                    message = "Admin Registration Successfully  Done";
-                    return Ok(new { Success = true, message});
-                }
-
-                message = "Registration Failed, User Already Exists.Please Check Email";
-
-                return Ok(new { Success = false, message });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Success = false, Message = ex.Message });
-            }
-        }
-
-        [HttpPost]
-        [Route("Login")]
         public IActionResult Login(UserLogin login)
         {
             string message;

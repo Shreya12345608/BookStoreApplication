@@ -97,8 +97,16 @@ namespace BookStoreApplication
                 {
                     { jwtSecurityScheme, Array.Empty<string>() }
                 });
-
             });
+            services.AddCors(opt =>
+                {
+                    opt.AddDefaultPolicy(builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+                });
         }
 
 
@@ -113,6 +121,8 @@ namespace BookStoreApplication
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
