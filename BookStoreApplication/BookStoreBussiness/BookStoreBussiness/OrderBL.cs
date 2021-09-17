@@ -1,4 +1,5 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreModel.CartModel;
 using BookStoreModel.OrderModel;
 using BookStoreRepository.IBookStoreRepository;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace BookStoreBussiness.BookStoreBussiness
 {
-    public class OrderBL :IOrderBL
+    public class OrderBL : IOrderBL
     {
         //instance variable
         private IOrderRL orderRL;
@@ -18,25 +19,15 @@ namespace BookStoreBussiness.BookStoreBussiness
 
             this.orderRL = orderRL;
         }
-
-        public bool CancelOrder(int UserId, int OrderId)
+        /// <summary>
+        ///This method  is created for place the order.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool PlaceOrder(int userId)
         {
-            return this.orderRL.CancelOrder(UserId, OrderId);
+            return this.orderRL.PlaceOrder(userId);
         }
 
-        public OrderModel PlaceOrder(int BookId, int CartId, int UserId)
-        {
-            return this.PlaceOrder(BookId, CartId, UserId);
-        }
-
-        public OrderModel PlaceOrderDiffrentAddress(int UserId, int BookId, int CartId, string Address, string City, int PinCode)
-        {
-            return this.PlaceOrderDiffrentAddress(UserId, BookId, CartId, Address, City, PinCode);
-        }
-
-        public List<OrderModel> ViewOrderPlaced(int UserId)
-        {
-            return this.ViewOrderPlaced(UserId);
-        }
     }
 }

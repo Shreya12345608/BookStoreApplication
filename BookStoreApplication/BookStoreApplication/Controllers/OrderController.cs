@@ -1,4 +1,6 @@
 ﻿using BookStoreBussiness.IBookStoreBussiness;
+using BookStoreModel.CartModel;
+using BookStoreModel.OrderModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,28 +34,36 @@ namespace BookStoreApplication.Controllers
             return userId;
         }
 
-        //[HttpPost]
-        //[Route("placeOrder")]
-        //public ActionResult PlaceOrder()
-        //{
-        //    int userID = this.GetUserID();
-        //    try
-        //    {
-        //        string Message;
-        //        Task<string> response = this.orderBL.PlaceOrder(userID);
-
-        //        if (response.Result != null)
-        //        {
-        //            Message = "order placed Successfully";
-        //            return this.Ok(new { Status = true, Message, Data = response.Result });
-        //        }
-        //        Message = "Order not placed";
-        //        return this.BadRequest(new { Status = false,Message, Data = response.Result });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return this.BadRequest(new { Status = false, Message = "Exception", Data = e });
-        //    }
-        //}
+        /// <summary>
+        /// This method is deleting cart details by taking cart Id.
+        /// </summary>
+        /// <param name="cartId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public IActionResult PlaceOrder()
+        {
+            string Message;
+            try
+            {
+                int userId = this.GetUserID();
+               
+                
+                bool result = orderBL.PlaceOrder(userId);
+                if (result)
+                {
+                    Message = $"hurray!!! your order is confirmed the order id is #{userId} save the order id for further communication..";
+                    return this.Ok(new { Status = true, Message, Data = result });
+                }
+                Message = "Order not placed";
+                return this.BadRequest(new { Status = false, Message, Data = result });
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Exception", Data = e });
+            }
+        }
     }
 }
+
+
+

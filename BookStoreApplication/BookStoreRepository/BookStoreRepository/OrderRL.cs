@@ -1,13 +1,16 @@
-﻿using BookStoreModel.OrderModel;
+﻿using BookStoreModel.CartModel;
+using BookStoreModel.OrderModel;
 using BookStoreRepository.IBookStoreRepository;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace BookStoreRepository.BookStoreRepository
 {
-   public class OrderRL : IOrderRL
+    public class OrderRL : IOrderRL
     {
         string connectionString;
         /// <summary>
@@ -20,24 +23,43 @@ namespace BookStoreRepository.BookStoreRepository
             connectionString = configuration.GetSection("ConnectionStrings").GetSection("bookStoreDB").Value;
         }
 
-        public bool CancelOrder(int UserId, int OrderId)
+        /// <summary>
+        /// This method is created for place the order
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        public bool PlaceOrder(int userId)
         {
-            throw new NotImplementedException();
-        }
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Implementing the stored procedure
+                    SqlCommand command = new SqlCommand("spPlaceOrder", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userId", userId);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    //Return the result of the transaction 
 
-        public OrderModel PlaceOrder(int BookId, int CartId, int UserId)
-        {
-            throw new NotImplementedException();
-        }
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch
+            {
 
-        public OrderModel PlaceOrderDiffrentAddress(int UserId, int BookId, int CartId, string Address, string City, int PinCode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<OrderModel> ViewOrderPlaced(int UserId)
-        {
-            throw new NotImplementedException();
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }

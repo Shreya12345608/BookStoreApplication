@@ -50,6 +50,8 @@ namespace BookStoreApplication
             services.AddScoped<IAddressBL,AddressBL>();
             services.AddScoped<IAddressRL, AddressRL>();
 
+            services.AddScoped<IOrderBL, OrderBL>();
+            services.AddScoped<IOrderRL, OrderRL>();
             //services.Configure<Settings>(Configuration.GetSection("AppSettings"));
             var authenticationSettings = Configuration.GetSection("AppSettings");
             services.Configure<Settings>(authenticationSettings);
